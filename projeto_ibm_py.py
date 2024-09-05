@@ -117,10 +117,6 @@ plt.show()
 
 
 
-
-
-
-
 # Equilíbrio entre vida pessoal e trabalho
 equilibrio_trab = df.groupby(['WorkLifeBalance', 'Attrition']).size().reset_index(name='Counts')
 
@@ -149,12 +145,56 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
 
 
+## WorLife Balance por Departamento
+df['WorkLifeBalance'] = pd.to_numeric(df['WorkLifeBalance'], errors='coerce')
+work_departament = df.groupby('Department')['WorkLifeBalance'].mean().reset_index()
 
+plt.figure(figsize=(10, 6))
+plt.bar(work_departament['Department'], work_departament['WorkLifeBalance'], color='blue')
+plt.title('Media de WorkLife Balance por Departamento')
+plt.xlabel('Departamento')
+plt.ylabel('WorkLibeBalance')
+plt.xticks(rotation=45)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
 
+## novo  
+distanciamedia_dep = df.groupby('Department')['DistanceFromHome'].mean().reset_index()
 
+plt.figure(figsize=(10, 6))
+plt.bar(distanciamedia_dep['Department'], distanciamedia_dep['DistanceFromHome'], color='blue')
+plt.title('Taxa Média de Distancia de Casa por Departmento')
+plt.xlabel('Departamento')
+plt.ylabel('Taxa Média de Distancia')
+plt.xticks(rotation=45)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+
+## TravelBusiness por WorkLifeBalance
+
+df['WorkLifeBalance'] = pd.to_numeric(df['WorkLifeBalance'], errors='coerce')
+work_travel = df.groupby('BusinessTravel').agg(
+    WorkLifeBalance_mean=('WorkLifeBalance', 'mean'),
+    Count=('WorkLifeBalance', 'size')
+).reset_index()
+
+plt.figure(figsize=(10, 6))
+bars = plt.bar(work_travel['BusinessTravel'], work_travel['WorkLifeBalance_mean'], color='blue')
+
+for bar, count in zip(bars, work_travel['Count']):
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, yval, f'N={count}', ha='center', va='bottom', fontsize=10)
+
+plt.title('Média de WorkLife Balance por BusinessTravel')
+plt.xlabel('BusinessTravel')
+plt.ylabel('Média de WorkLifeBalance')
+plt.xticks(rotation=45)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
 
 # Preparar dados para árvore de decisão
-features = [ "WorkLifeBalance", "DistanceFromHome","Attrition","Department"]
+
+features = [ "MonthlyIncome","Department","WorkLifeBalance"]
 
 # Converter variáveis categóricas
 cat_features = ['Department']
@@ -168,10 +208,11 @@ onehot.fit(X)
 X_encoded = onehot.transform(X)
 
 # Ajustar o modelo de árvore de decisão
-y = df['Department']
+y = df['Attrition']
 arvore = tree.DecisionTreeClassifier(max_depth=3)
 arvore.fit(X_encoded, y)
 
+# Verificar as colunas em X_encoded
 print("Colunas em X_encoded:", X_encoded.columns)
 
 # Verificar as classes usadas na árvore
@@ -187,6 +228,13 @@ tree.plot_tree(
     max_depth=3
 )
 plt.show()
+
+
+
+
+
+
+    ##Subir Nova Atualização
 
 # %%
 
