@@ -1,12 +1,12 @@
 
 # %%
-
 # Lê o arquivo usando pandas
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from feature_engine import encoding
 from sklearn import tree
+import plotly.express as px
 
 # Carregando o DataFrame
 df = pd.read_csv("C:/Users/henri/Desktop/IBM/WA_Fn-UseC_-HR-Employee-Attrition.csv")
@@ -59,11 +59,7 @@ plt.ylabel('Média Salarial')
 plt.grid(True)
 plt.show()
 
-# Media Salarial por Setor
 
-
-
-# Supondo que df seja o seu DataFrame original
 
 # Agrupando por TotalWorkingYears e Department para calcular a média salarial
 media_salarial_setor_anos = df.groupby(['TotalWorkingYears', 'Department'])['MonthlyIncome'].mean().reset_index()
@@ -170,27 +166,32 @@ plt.xticks(rotation=45)
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
 
-## TravelBusiness por WorkLifeBalance
+## TravelBusiness por Setor
+# Agrupar por BusinessTravel e Department para obter a contagem de pessoas
+work_travel = df.groupby(['BusinessTravel', 'Department']).size().reset_index(name='Count')
 
-df['WorkLifeBalance'] = pd.to_numeric(df['WorkLifeBalance'], errors='coerce')
-work_travel = df.groupby('BusinessTravel').agg(
-    WorkLifeBalance_mean=('WorkLifeBalance', 'mean'),
-    Count=('WorkLifeBalance', 'size')
-).reset_index()
+# Criar o gráfico
+sns.set_palette('deep')
+plt.figure(figsize=(15, 6))
 
-plt.figure(figsize=(10, 6))
-bars = plt.bar(work_travel['BusinessTravel'], work_travel['WorkLifeBalance_mean'], color='blue')
+# Plotar as barras empilhadas para cada departamento
+sns.barplot(x='BusinessTravel', y='Count', hue='Department', data=work_travel)
 
-for bar, count in zip(bars, work_travel['Count']):
-    yval = bar.get_height()
-    plt.text(bar.get_x() + bar.get_width()/2, yval, f'N={count}', ha='center', va='bottom', fontsize=10)
+# Adicionar rótulos com a contagem de pessoas
+for i in range(work_travel.shape[0]):
+    plt.text(
+        i - 0.2, 
+        work_travel.iloc[i]['Count'] + 5,  # Posicionar o texto acima da barra
+        f"N={work_travel.iloc[i]['Count']}", 
+        ha='center', 
+        va='bottom', 
+        fontsize=12
+    )
 
-plt.title('Média de WorkLife Balance por BusinessTravel')
-plt.xlabel('BusinessTravel')
-plt.ylabel('Média de WorkLifeBalance')
-plt.xticks(rotation=45)
-plt.grid(axis='y', linestyle='--', alpha=0.7)
-plt.show()
+# Configurar o gráfico
+fig = px.bar(work_travel, x='Department', y='Count', color='BusinessTravel')
+fig.show()
+
 
 # Preparar dados para árvore de decisão
 
@@ -239,4 +240,3 @@ plt.show()
 # %%
 
 
-# %%
