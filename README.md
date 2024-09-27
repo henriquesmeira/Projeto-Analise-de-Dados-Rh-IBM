@@ -18,17 +18,20 @@ matplotlib
 
 
 📈 **Análise e Visualização de Dados**
+
 1️⃣ Desligamentos por Idade :
 
 
 ![Gráfico de Desligamentos por Idade](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/image_1.png?raw=true)
 
-2️⃣ **Média Salarial por Anos de Empresa**
-Aqui, analisamos como a média salarial varia de acordo com o tempo de empresa:
+2️⃣ **Desligamentos por Faixa Salarial e Setor**
 
-![Média Salarial Por Anos de Empresa](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/media%20salarial%20por%20anos%20de%20empresa.png?raw=true)
+Aqui,analisamos como a média salarial varia de acordo com o tempo de empresa:
+
+![Média Salarial Por Anos de Empresa](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/Desligamentos%20por%20renda.png?raw=true)
 
 3️⃣ **Média Salarial por Setor e Anos de Empresa**
+
 Para uma análise mais detalhada, visualizamos a média salarial de acordo com o tempo de empresa, mas desta vez segmentado por setor:
 
 ![Média Salarial Por Anos e Setor](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/media%20salarial%20por%20departamente.png?raw=true)
@@ -42,6 +45,7 @@ Agora analisamos os colaboradores que se desligaram da empresa, divididos por se
 
 
 5️⃣ **Equilíbrio Vida-Trabalho**
+
 Analisamos agora como o equilíbrio entre vida pessoal e trabalho se distribui entre colaboradores ativos e desligados:
 
 ![Equilibrio Entre Vida e Trabalho](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/equilibrio%20vida%20trab%20%20por%20departmento.png?raw=true)
@@ -49,11 +53,13 @@ Analisamos agora como o equilíbrio entre vida pessoal e trabalho se distribui e
 
 
 6️⃣ **Taxa de Desligamento por Setor**
+
 Esta análise mostra qual setor tem a maior taxa de desligamentos:
 
 ![Desligamentos por Setor](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/taxa%20media%20de%20desliga%20por%20departamento.png?raw=true)
 
 7️⃣ **Equilíbrio Vida-Trabalho por Setor**
+
 Finalmente, analisamos o equilíbrio vida-trabalho médio para cada setor da empresa:
 
 ![Business Travel por Setor](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/travelporsetor.JPG?raw=true)
