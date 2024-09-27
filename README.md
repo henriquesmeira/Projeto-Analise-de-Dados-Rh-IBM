@@ -70,5 +70,5 @@ Dessa forma, fica evidente que embora o salário possa ser uma fator relevante d
 
 ![Pearson Monthly Income e WorkLifeBalance](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/Pearson%20WorkLife%20Balance%20e%20MonthlyIncome.png?raw=true)
 
-![Pearson DistanceFromHome e WorkLifeBalance](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/travelporsetor.JPG?raw=true)
+![Pearson DistanceFromHome e WorkLifeBalance](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/WorkLife%20Balance%20e%20DistanceFromHome.png?raw=true)
 
