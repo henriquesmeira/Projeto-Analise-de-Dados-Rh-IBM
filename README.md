@@ -21,7 +21,7 @@ matplotlib
 1️⃣ Desligamentos por Idade :
 
 
-![Gráfico de Desligamentos por Idade](C:\Users\henri\Desktop\Dados IBM\Imagens\image_1)
+![Gráfico de Desligamentos por Idade](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/image_1.png?raw=true)
 
 2️⃣ **Média Salarial por Anos de Empresa**
 Aqui, analisamos como a média salarial varia de acordo com o tempo de empresa:
@@ -57,4 +57,18 @@ Esta análise mostra qual setor tem a maior taxa de desligamentos:
 Finalmente, analisamos o equilíbrio vida-trabalho médio para cada setor da empresa:
 
 ![Business Travel por Setor](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/travelporsetor.JPG?raw=true)
+
+
+ **Verificando se Existe Correlações entra Variáveis**
+
+Para verificar se algumas das variáveis influenciava diretamente em fatores das outras variáveis, fiz uma analise com base na correção de Pearson, vendo se existia valores significativos para variáveis como : WorkLifeBalance, MonthIncome e DistanceFromHome.
+Passada a análise foi visto que nenhuma das duas influeciava diretamente na variavel WorkLifeBalance. 
+
+Dessa forma, fica evidente que embora o salário possa ser uma fator relevante dentro de um processo de Desligamento ou não , nesse caso , aparentemente não é o fator principal para tal, assim como também a Distancia entre Trabalho e Casa.
+
+
+
+![Pearson Monthly Income e WorkLifeBalance](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/travelporsetor.JPG?raw=true)
+
+![Pearson DistanceFromHome e WorkLifeBalance](https://github.com/henriquesmeira/Projeto-Analise-de-Dados-Rh-IBM/blob/ReadMe/Imagens/travelporsetor.JPG?raw=true)
 
