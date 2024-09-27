@@ -7,12 +7,22 @@ import seaborn as sns
 from feature_engine import encoding
 from sklearn import tree
 import plotly.express as px
+import numpy as np
 
 # Carregando o DataFrame
 df = pd.read_csv("C:/Users/henri/Desktop/IBM/WA_Fn-UseC_-HR-Employee-Attrition.csv")
 
-# Exibir as primeiras linhas do DataFrame
-print(df.head())
+# Exibir as primeiras linhas do DataFrame e entendendo o DataFrame
+
+print(df.head(3))
+df.shape
+df.columns
+df.describe()
+df.describe(include ='all')
+df.info()
+
+df.isnull().any()
+
 
 # Convertendo variáveis categóricas
 df['Attrition'] = df['Attrition'].map({'Yes': 1, 'No': 0}) # Alterando os valores de Attrition para valores binarios
@@ -31,24 +41,37 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
+
 # Análise da Renda dos Colaboradores e como ela influencia nos desligamentos
-renda_idade = df.groupby(['MonthlyIncome', 'Attrition']).size().reset_index(name='Count')
+
+filtro_desligado = df[df['Attrition'] == 1]
+renda_idade = filtro_desligado.groupby(['MonthlyIncome', 'Attrition','Department']).size().reset_index(name='Count')
 renda_idade['MonthlyIncome'] = pd.to_numeric(renda_idade['MonthlyIncome'], errors='coerce')
 renda_idade['MonthlyIncome'] = renda_idade['MonthlyIncome'].round(-3)  # Arredondar para o milhar mais próximo
-renda_idade = renda_idade.groupby(['MonthlyIncome', 'Attrition']).sum().reset_index()
+renda_idade = renda_idade.groupby(['MonthlyIncome', 'Attrition','Department']).sum().reset_index()
 
-# Montagem de gráfico de renda
-plt.figure(figsize=(8, 6))
-plt.plot(renda_idade['MonthlyIncome'], renda_idade['Count'], marker='o', linestyle='dashed', color='green')
-plt.title('Desligamentos de acordo com a renda')
+pivot_data = renda_idade.pivot_table(index='MonthlyIncome', columns='Department', values='Count', fill_value=0)
+colors = {
+    'Research & Development': 'blue',
+    'Sales': 'orange',
+    'Human Resources': 'green'
+}
+
+pivot_data.plot(kind='bar', stacked=True, figsize=(10, 7), color=[colors[col] for col in pivot_data.columns])
+
+#Montagem Grafico
+
+plt.title('Desligamentos por Faixa Salarial e Setor')
 plt.xlabel('Salário (milhares)')
-plt.ylabel('Número de Colaboradores')
-plt.grid(True)
+plt.ylabel('Número de Colaboradores Desligados')
+plt.legend(title='Setor')
+plt.grid(axis='y')
 plt.show()
 
 # Tempo de trabalho por Salário
 
 media_salarial = df.groupby('TotalWorkingYears')['MonthlyIncome'].mean().reset_index()
+
 
 # Plotando o gráfico da média salarial por anos de empresa
 plt.figure(figsize=(8, 6))
@@ -78,14 +101,6 @@ plt.ylabel('Média Salarial')
 plt.legend(title='Departamento')
 plt.grid(True)
 plt.show()
-
-
-## novo
-
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Supondo que df seja o seu DataFrame original e que a coluna 'Attrition' seja binária (1 para desligado, 0 para não desligado)
 
 # 1. Filtrar os funcionários com Attrition = 1
 desligados = df[df['Attrition'] == 1]
@@ -170,69 +185,44 @@ plt.show()
 # Agrupar por BusinessTravel e Department para obter a contagem de pessoas
 work_travel = df.groupby(['BusinessTravel', 'Department']).size().reset_index(name='Count')
 
-# Criar o gráfico
-sns.set_palette('deep')
-plt.figure(figsize=(15, 6))
-
-# Plotar as barras empilhadas para cada departamento
-sns.barplot(x='BusinessTravel', y='Count', hue='Department', data=work_travel)
-
-# Adicionar rótulos com a contagem de pessoas
-for i in range(work_travel.shape[0]):
-    plt.text(
-        i - 0.2, 
-        work_travel.iloc[i]['Count'] + 5,  # Posicionar o texto acima da barra
-        f"N={work_travel.iloc[i]['Count']}", 
-        ha='center', 
-        va='bottom', 
-        fontsize=12
-    )
-
 # Configurar o gráfico
 fig = px.bar(work_travel, x='Department', y='Count', color='BusinessTravel')
 fig.show()
 
 
-# Preparar dados para árvore de decisão
+# Correlação de Pearson
 
-features = [ "MonthlyIncome","Department","WorkLifeBalance"]
+A = df['WorkLifeBalance']
+B = df['MonthlyIncome']
+ 
+ # Calculando Correlacao      ]
+correlacao = np.corrcoef(A,B)
+print(f"Correlaçao de Pearson: {correlacao}")
+# Montando Grafico :
+sns.lmplot(x='WorkLifeBalance', y='MonthlyIncome',data=df , ci=None)
 
-# Converter variáveis categóricas
-cat_features = ['Department']
-
-# Selecionar as características
-X = df[features]
-
-# Codificar variáveis categóricas
-onehot = encoding.OneHotEncoder(variables=cat_features)
-onehot.fit(X)
-X_encoded = onehot.transform(X)
-
-# Ajustar o modelo de árvore de decisão
-y = df['Attrition']
-arvore = tree.DecisionTreeClassifier(max_depth=3)
-arvore.fit(X_encoded, y)
-
-# Verificar as colunas em X_encoded
-print("Colunas em X_encoded:", X_encoded.columns)
-
-# Verificar as classes usadas na árvore
-print("Classes na árvore:", arvore.classes_)
-
-# Plotar a árvore de decisão
-plt.figure(dpi=600)
-tree.plot_tree(
-    arvore,
-    class_names=[str(cls) for cls in arvore.classes_],  # Convertendo classes para strings
-    feature_names=X_encoded.columns.tolist(),  # Convertendo colunas para lista
-    filled=True,
-    max_depth=3
-)
+#Rotulos 
+plt.title('Correlação entre WorkLifeBalance e MonthlyIncome')
+plt.xlabel('WorkLifeBalance')
+plt.ylabel('MontlyIncome')
 plt.show()
 
+# Correlação de Pearson para Distance From Home
 
+A = df['WorkLifeBalance']
+B = df['DistanceFromHome']
+ 
+ # Calculando Correlacao      ]
+correlacao = np.corrcoef(A,B)
+print(f"Correlaçao de Pearson: {correlacao}")
+# Montando Grafico :
+sns.lmplot(x='WorkLifeBalance', y='DistanceFromHome',data=df , ci=None)
 
-
+#Rotulos 
+plt.title('Correlação entre WorkLifeBalance e DistanceFromHome')
+plt.xlabel('WorkLifeBalance')
+plt.ylabel('DistanceFromHome')
+plt.show()
 
 
     ##Subir Nova Atualização
