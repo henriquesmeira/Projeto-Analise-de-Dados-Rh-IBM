@@ -67,7 +67,7 @@ Finalmente, analisamos o equilíbrio vida-trabalho médio para cada setor da emp
 
  **Verificando se Existe Correlações entra Variáveis**
 
-Para verificar se algumas das variáveis influenciava diretamente em fatores das outras variáveis, fiz uma analise com base na correção de Pearson, vendo se existia valores significativos para variáveis como : WorkLifeBalance, MonthIncome e DistanceFromHome.
+Para verificar se algumas das variáveis influenciava diretamente em fatores das outras variáveis, fiz uma analise com base na correlação de Pearson, vendo se existia valores significativos para variáveis como : WorkLifeBalance, MonthIncome e DistanceFromHome.
 Passada a análise foi visto que nenhuma das duas influeciava diretamente na variavel WorkLifeBalance. 
 
 Dessa forma, fica evidente que embora o salário possa ser uma fator relevante dentro de um processo de Desligamento ou não , nesse caso , aparentemente não é o fator principal para tal, assim como também a Distancia entre Trabalho e Casa.
